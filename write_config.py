@@ -30,8 +30,8 @@ current_dir = os.getcwd()
 clf_logs = os.path.join(current_dir, 'clf_logs')
 config['Directory']['current_dir'] = current_dir
 config['Directory']['clf_logs'] = clf_logs
-config['Directory']['metadata_pub_path'] =  'metadata_pub.csv'
-config['Directory']['metadata_uog_path'] =  'metadata_uog.csv'
+config['Directory']['metadata_pub_path'] =  'abs_metadata_pub.csv'
+config['Directory']['metadata_uog_path'] =  'abs_metadata_uog.csv'
 PreTrainedModel_Name = 'InceptionV3'
 config['Directory']['pretrainedmodel_name'] = PreTrainedModel_Name
 config['Directory']['base_model_dir'] = os.path.join(clf_logs, PreTrainedModel_Name, 'models', 'base-model')
@@ -47,12 +47,12 @@ config['Directory']['metadata_path'] =  os.path.join(current_dir, 'tnse_logs/met
 # Model
 config['Model']['batch_size'] = '32'
 config['Model']['epochs'] = '1'
-config['Model']['initial_epochs'] = '20'
-config['Model']['fine_tune_epochs'] = '20'
-config['Model']['total_epochs'] =' 40'
+config['Model']['initial_epochs'] = '10'
+config['Model']['fine_tune_epochs'] = '15'
+config['Model']['total_epochs'] = '25'
 config['Model']['base_learning_rate'] = '0.0001'
 config['Model']['tune_learning_rate'] = '0.00001'
-config['Model']['fine_tune_at'] = '265'
+config['Model']['fine_tune_at'] = '180'
 config['Model']['use_cv'] = '0'
 config['Model']['num_splits'] = '3'
 

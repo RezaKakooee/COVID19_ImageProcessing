@@ -40,7 +40,16 @@ def Image_Generator(trainX, trainY, validX, validY, logger):
   BATCH_SIZE = int(config['Model']['BATCH_SIZE'])
   
   print("----- Image Generator")
-  train_image_generator = ImageDataGenerator(rescale=1./255)
+  train_image_generator = ImageDataGenerator(rescale=1./255,
+                                             featurewise_center=True,
+                                             featurewise_std_normalization=True,
+                                             rotation_range=20,
+                                             width_shift_range=0.2,
+                                             height_shift_range=0.2,
+                                             horizontal_flip=True,
+                                             vertical_flip=True,
+                                             shear_range=0.2,
+                                             zoom_range=0.2)
 
   valid_image_generator = ImageDataGenerator(rescale=1./255)
 
@@ -254,9 +263,10 @@ def main(logger, config):
   tune_model_dir = config['Directory']['tune_model_dir'] 
   histories_dir = config['Directory']['histories_dir'] 
   #### =================================================================== ####
+  print("----- Loading images ...")
   ##### Load images
   loader = Loader()
-  num_images, images_arr, labels, labels_ind, num_classes, class_names, class_weight = loader.load_images()
+  num_images, images_arr, labels, labels_ind, num_classes, class_names, class_count, class_weight = loader.load_images()
   
   #### =================================================================== ####
   ##### Training pipline

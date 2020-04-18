@@ -39,8 +39,12 @@ class Loader:
         return np.dot(rgb[...,:3], [0.299, 0.587, 0.144])
   
     def _get_labels(self):
-        labels = self.csv['label'].values
+        labels = self.csv['Label'].values
         return labels
+    
+    def _get_labels_ind(self):
+        labels_ind = self.csv['Label_Ind'].values
+        return labels_ind
     
     def _class_name_to_index(self, labels):
             unique_labels = np.unique(labels)
@@ -56,13 +60,13 @@ class Loader:
         csv = self._load_csv()
         
         # get image names
-        image_names = csv['filename'].values
+        image_names = csv['Name'].values
         num_images = len(image_names)
         # get image paths prefix
-        image_paths_postfix = csv['path_postfix'].values
+        image_paths = csv['Path'].values
         
         # make image pathes
-        image_pathes = image_paths_postfix
+        image_pathes = image_paths
         
         # convert images to other formats
         images_arr = []
@@ -72,7 +76,7 @@ class Loader:
         for img_path in image_pathes:
             img = load_img(img_path, target_size=(img_h, img_w))
             img = img_to_array(img)
-            img /= 255.0
+            # img /= 255.0
                 
             # if change_img_shape:
             #     # Check that images are 2D arrays
@@ -93,9 +97,15 @@ class Loader:
       
         labels = self._get_labels()
         class_names, class_count = np.unique(labels, return_counts=True)
+        class_names = ['Normal', 'Abnormal']
         num_classes = len(class_names)
-        class_weights = [1-count/num_images for count in class_count]
+        # class_weights = [1-count/num_images for count in class_count]
+        n_positives = class_count[0]
+        n_negatives = class_count[1]
+        weight_for_0 = (1 / n_negatives)*num_images/2.0 
+        weight_for_1 = (1 / n_positives)*num_images/2.0
+        class_weight = {0: weight_for_0, 1: weight_for_1}
+        # labels_ind = self._class_name_to_index(labels)
+        labels_ind = self._get_labels_ind()
         
-        labels_ind = self._class_name_to_index(labels)
-        
-        return num_images, images_arr, labels, labels_ind, num_classes, class_names, class_weights
+        return num_images, images_arr, labels, labels_ind, num_classes, class_names, class_count, class_weight
