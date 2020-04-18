@@ -1,0 +1,12 @@
+.idea
+__pycache__
+clf_logs
+covid-chestxray-dataset
+heatmaps/__pycache__
+heatmaps/output_arrays
+tnse_logs
+UoGeneva
+image_tsne_to_TB.ipynb
+
+
+*.html
