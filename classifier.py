@@ -41,15 +41,16 @@ def Image_Generator(trainX, trainY, validX, validY, logger):
   
   print("----- Image Generator")
   train_image_generator = ImageDataGenerator(rescale=1./255,
-                                             featurewise_center=True,
-                                             featurewise_std_normalization=True,
+                                             # featurewise_center=True,
+                                             # featurewise_std_normalization=True,
                                              rotation_range=20,
                                              width_shift_range=0.2,
                                              height_shift_range=0.2,
                                              horizontal_flip=True,
                                              vertical_flip=True,
-                                             shear_range=0.2,
-                                             zoom_range=0.2)
+                                             # shear_range=0.2,
+                                             # zoom_range=0.2,
+                                             )
 
   valid_image_generator = ImageDataGenerator(rescale=1./255)
 
@@ -329,7 +330,7 @@ def main(logger, config):
          return history_base_list, history_tune_list, train_index_list, valid_index_list
 
   else:
-     trainX, validX, trainY, validY = train_test_split(images_arr, labels_ind, test_size=0.3, stratify=labels_ind)
+     trainX, validX, trainY, validY = train_test_split(images_arr, labels_ind, test_size=0.05, stratify=labels_ind)
      ###### Split images
      num_train = len(trainY)
      num_valid = len(validY)
